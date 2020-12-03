@@ -1,5 +1,7 @@
 package com.stacksimplify.restservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"firstname", "lastname"})
 public class User extends RepresentationModel {
 
     @Id
@@ -16,7 +19,7 @@ public class User extends RepresentationModel {
     private Long id;
 
     @NotEmpty(message = "Username is Mandatory field. Please provide username")
-    @Column(name = "user_name", length = 50, nullable = false, unique = true)
+    @Column(name = "user_name", length = 50, nullable = false, unique =  true)
     private String username;
 
     @Size(min = 2, message = "FirsName should have atleast 2 characters")
@@ -29,6 +32,7 @@ public class User extends RepresentationModel {
     @Column(name = "role", length = 50, nullable = false)
     private String role;
     @Column(name = "ssn", length = 50, nullable = false, unique = true)
+    @JsonIgnore
     private String ssn;
 
     @OneToMany(mappedBy = "user")

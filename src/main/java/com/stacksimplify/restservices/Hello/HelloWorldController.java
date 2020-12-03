@@ -35,7 +35,7 @@ public class  HelloWorldController {
     }
 
     @GetMapping("/hello-int2")
-    public String getMessageIn18nFormat2(){
+    public String getMessageIn18nFormat2( ){
         return messageSource.getMessage("label.hello", null, LocaleContextHolder.getLocale());
 
     }
