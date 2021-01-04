@@ -16,8 +16,8 @@ import javax.validation.constraints.Min;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("versioning/params/users")
-public class UserRequestParameterVersioningController {
+@RequestMapping("versioning/headers/users")
+public class UserCustomHeadersVersioningController {
 
 
     // Autowire the userSService
@@ -27,8 +27,8 @@ public class UserRequestParameterVersioningController {
     @Autowired
    private ModelMapper modelMapper;
 
-    //Request parameter Versioning
-    @GetMapping(value = "/{id}", params = "version=1")
+    //Custom headers Versioning
+    @GetMapping(value = "/{id}", headers = "API-VERSION=1")
     public UserDtoV1 getUserById(@PathVariable("id") @Min(1) Long id) throws UserNotFoundException {
         Optional<User> userOptional = userService.getUserById(id);
         if (!userOptional.isPresent()){
@@ -41,7 +41,7 @@ public class UserRequestParameterVersioningController {
     }
 
     //Version 1
-    @GetMapping(value = "/{id}", params = "version=2")
+    @GetMapping(value = "/{id}", headers = "API-VERSION=2")
     public UserDtoV2 getUserById2(@PathVariable("id") @Min(1) Long id) throws UserNotFoundException {
         Optional<User> userOptional = userService.getUserById(id);
         if (!userOptional.isPresent()){

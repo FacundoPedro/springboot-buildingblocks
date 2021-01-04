@@ -2,7 +2,6 @@ package com.stacksimplify.restservices.controllers;
 
 import com.stacksimplify.restservices.dtos.UserDtoV1;
 import com.stacksimplify.restservices.dtos.UserDtoV2;
-import com.stacksimplify.restservices.dtos.UserMmDto;
 import com.stacksimplify.restservices.entities.User;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.services.UserService;
@@ -17,8 +16,8 @@ import javax.validation.constraints.Min;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("versioning/uri/users")
-public class UserUriVersioningController {
+@RequestMapping("versioning/params/users")
+public class UserRequestParameterVersioningController {
 
 
     // Autowire the userSService
@@ -28,8 +27,8 @@ public class UserUriVersioningController {
     @Autowired
    private ModelMapper modelMapper;
 
-    //Version 1
-    @GetMapping({ "/v1.0/{id}", "/v1.1/{id}" })
+    //Request parameter Versioning
+    @GetMapping(value = "/{id}", params = "version=1")
     public UserDtoV1 getUserById(@PathVariable("id") @Min(1) Long id) throws UserNotFoundException {
         Optional<User> userOptional = userService.getUserById(id);
         if (!userOptional.isPresent()){
@@ -42,7 +41,7 @@ public class UserUriVersioningController {
     }
 
     //Version 1
-    @GetMapping({ "/v2.0/{id}"})
+    @GetMapping(value = "/{id}", params = "version=2")
     public UserDtoV2 getUserById2(@PathVariable("id") @Min(1) Long id) throws UserNotFoundException {
         Optional<User> userOptional = userService.getUserById(id);
         if (!userOptional.isPresent()){

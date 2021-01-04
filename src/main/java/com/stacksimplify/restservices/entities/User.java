@@ -17,6 +17,7 @@ import java.util.List;
 //@JsonFilter(value = "userFilter") - User for Mapping json value filterin section
 public class User extends RepresentationModel {
 
+
     @Id
     @GeneratedValue
     @JsonView(Views.External.class)
@@ -49,11 +50,21 @@ public class User extends RepresentationModel {
     @JsonView(Views.Internal.class)
     private List<Order> order;
 
+    @Column(name = "address")
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     // CTOs
     public User(){}
 
-    public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
+    public User(Long id, @NotEmpty(message = "Username is Mandatory field. Please provide username") String username, @Size(min = 2, message = "FirsName should have atleast 2 characters") String firstname, String lastname, String email, String role, String ssn, List<Order> order, String address) {
         this.id = id;
         this.username = username;
         this.firstname = firstname;
@@ -61,6 +72,8 @@ public class User extends RepresentationModel {
         this.email = email;
         this.role = role;
         this.ssn = ssn;
+        this.order = order;
+        this.address = address;
     }
 
     // Getters and Setters
@@ -141,6 +154,8 @@ public class User extends RepresentationModel {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", ssn='" + ssn + '\'' +
+                ", order=" + order +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
