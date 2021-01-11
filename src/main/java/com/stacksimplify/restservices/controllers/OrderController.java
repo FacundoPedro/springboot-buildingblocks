@@ -49,9 +49,10 @@ public class OrderController {
     }
 
     @GetMapping("/{userid}/orders/{orderid}")
-    public Optional<Order> getOrderByOrderId(@PathVariable Long userid, @PathVariable Long orderid){
+    public Order getOrderByOrderId(@PathVariable Long userid, @PathVariable Long orderid){
         try {
-            return orderService.getOrderById(userid, orderid);
+            Optional<Order> optionalOrder = orderService.getOrderById(userid, orderid);
+            return optionalOrder.get();
         }
         catch (OrderNotFoundException ex){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
